@@ -7,12 +7,20 @@ namespace CalculatorLabb3
 {
     public class Calculator
     {
+
+        public static List<double> userInputs = new List<double>();
+        public static double input;
+        public static bool userInputBool = true;
+        public static string operatorString;
+
+
+
         public static double input1;
         public static double input2;
         public static double result;
         public static string resultString;
         public static string calcFormString;
-        
+
         public static List<string> CalculationHistory = new List<string>();
 
         public static bool mainMenu = true;
@@ -25,7 +33,7 @@ namespace CalculatorLabb3
 
             while (mainMenu)
             {
-               
+
                 Console.WriteLine("-----------------------   Calculator   -----------------------\n\n1. Calculate \n2. Calculate History\n3. Exit");
                 switch (Console.ReadLine())
                 {
@@ -48,21 +56,31 @@ namespace CalculatorLabb3
         public static void UserInputs()
         {
             Console.Clear();
-            
-            
-                Console.WriteLine("Please enter a number");
-                while (!double.TryParse(Console.ReadLine(), out input1))
-                {
-                    Console.WriteLine("Error, enter a number instead");
-                }
 
-                Console.WriteLine("Please enter another number");
-                while (!double.TryParse(Console.ReadLine(), out input2))
+            while (userInputBool)
+            {
+                Console.WriteLine("Please enter a number");
+
+                string inputUSer = Console.ReadLine();
+
+                if (double.TryParse(inputUSer, out input))
                 {
-                    Console.WriteLine("Error, enter a number instead");
+                    
+                    userInputs.Add(input);
                 }
-                Console.Clear();
-            
+                else if (inputUSer == "")
+                {
+                    userInputBool = false;
+                }
+                else
+                {
+                    Console.WriteLine("You must enter numbers, not special characters!");
+                }
+               
+            }
+
+
+
 
         }
         public static void CalculationForm()
@@ -112,6 +130,26 @@ namespace CalculatorLabb3
         public static void StoreCalculation(string calcOperator)
         {
             calcFormString = calcOperator;
+
+            for (int i = 0; i < userInputs.Count; i++)
+            {
+                if (i < (userInputs.Count -1))
+                {
+                    operatorString = "+";
+                }
+                else
+                {
+                    operatorString = "";
+                }
+                Console.Write(i + operatorString);
+            }
+            Console.Write(" = " + Addition());
+
+
+
+
+
+
             resultString = $"{input1} {calcFormString} {input2} = {result}";
             CalculationHistory.Add(resultString);
         }
@@ -122,16 +160,23 @@ namespace CalculatorLabb3
             Console.Clear();
         }
 
-        
+
         public static double Addition()
         {
-            result = input1 + input2;
+
+            foreach (var item in userInputs)
+            {
+                result += item;
+            }
             return result;
 
         }
         public static double Subtraction()
         {
-            result = input1 - input2;
+            foreach (var item in userInputs)
+            {
+                result -= item;
+            }
             return result;
         }
         public static double Multiplication()
