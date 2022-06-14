@@ -62,7 +62,7 @@ namespace CalculatorLabb3
                     Console.WriteLine("Error, enter a number instead");
                 }
                 Console.Clear();
-          
+            }
 
         }
         public static void CalculationForm()
