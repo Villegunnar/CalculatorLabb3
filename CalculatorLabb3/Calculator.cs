@@ -49,7 +49,7 @@ namespace CalculatorLabb3
         {
             Console.Clear();
             
-            {
+            
                 Console.WriteLine("Please enter a number");
                 while (!double.TryParse(Console.ReadLine(), out input1))
                 {
@@ -62,7 +62,7 @@ namespace CalculatorLabb3
                     Console.WriteLine("Error, enter a number instead");
                 }
                 Console.Clear();
-            }
+            
 
         }
         public static void CalculationForm()
