@@ -11,7 +11,10 @@ namespace CalculatorLabb3
         public static List<double> userInputs = new List<double>();
         public static double input;
         public static bool userInputBool = true;
+        public static bool SaveResultMeny = true;
         public static string operatorString;
+
+        public static double resultSavedInMemory = 0;
 
 
 
@@ -59,6 +62,24 @@ namespace CalculatorLabb3
 
             while (userInputBool)
             {
+                if (resultSavedInMemory != 0)
+                {
+                    Console.WriteLine("Would you like to use your stored result in this calculation?\n1. Yes\n2. No");
+                    
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            Console.WriteLine($"You pressed yes, adding {resultSavedInMemory} to you current calculation and clearing the saved result from the stored memory");
+                            userInputs.Add(resultSavedInMemory);
+                            resultSavedInMemory = 0;
+                            break;
+                        case "2":
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 Console.WriteLine("Please enter a number");
 
                 string inputUSer = Console.ReadLine();
@@ -79,7 +100,7 @@ namespace CalculatorLabb3
                
             }
 
-
+            userInputBool = true;
 
 
         }
@@ -135,31 +156,68 @@ namespace CalculatorLabb3
             {
                 if (i < (userInputs.Count -1))
                 {
-                    operatorString = "+";
+                    operatorString = calcFormString;
                 }
                 else
                 {
                     operatorString = "";
                 }
-                Console.Write(i + operatorString);
+                
+                resultString += $"{userInputs[i]} {operatorString} ";
             }
-            Console.Write(" = " + Addition());
 
-
-
-
-
-
-            resultString = $"{input1} {calcFormString} {input2} = {result}";
+            resultString += $"= {result}";
             CalculationHistory.Add(resultString);
+
+            
+
+
         }
         public static void PrintResult()
         {
             Console.WriteLine($"Your calculation: {resultString} \nPress enter to go back to menu...");
             Console.ReadLine();
+
+            SaveResultInMemory(result);
+
+            
+
+
+            resultString = "";
+            userInputs.Clear();
+            result = 0;
             Console.Clear();
         }
 
+        public static double SaveResultInMemory(double tempResult)
+        {
+            result = tempResult;
+
+            if (resultSavedInMemory == 0)
+            {
+                while (SaveResultMeny)
+                {
+                    Console.WriteLine($"By the way! Would you like to save this result to use for later?\n1. Yes\n2. No");
+                    string SaveResult = Console.ReadLine();
+                    if (SaveResult == "1")
+                    {
+                        resultSavedInMemory = result;
+                        Console.WriteLine($"You pressed yes, saving result {resultSavedInMemory} in memory...\nPress Enter to go back to menu");
+                        Console.ReadLine();
+                       
+                        break;
+                    }
+                    else if (SaveResult == "2")
+                    {
+                        Console.WriteLine($"You pressed no, going back to meny...");
+                        Thread.Sleep(2000);
+                        break;
+                    }
+                }
+            }
+           
+            return result;
+        }
 
         public static double Addition()
         {
@@ -173,24 +231,35 @@ namespace CalculatorLabb3
         }
         public static double Subtraction()
         {
-            foreach (var item in userInputs)
+
+            result = userInputs[0];
+
+            for (int i = 1; i < userInputs.Count; i++)
             {
-                result -= item;
+                result -= userInputs[i];
             }
             return result;
         }
         public static double Multiplication()
         {
-            result = input1 * input2;
+            result = userInputs[0];
+
+            for (int i = 1; i < userInputs.Count; i++)
+            {
+                result *= userInputs[i];
+            }
             return result;
         }
         public static double Division()
         {
-            result = input1 / input2;
+            result = userInputs[0];
+
+            for (int i = 1; i < userInputs.Count; i++)
+            {
+                result /= userInputs[i];
+            }
             return result;
         }
-
-
 
 
         public static void PrintCalcHistory()
