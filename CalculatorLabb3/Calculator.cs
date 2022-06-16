@@ -12,7 +12,7 @@ namespace CalculatorLabb3
         public static double input;
         public static bool userInputBool = true;
         public static string operatorString;
-
+        
 
 
         public static double input1;
@@ -20,6 +20,7 @@ namespace CalculatorLabb3
         public static double result;
         public static string resultString;
         public static string calcFormString;
+
 
         public static List<string> CalculationHistory = new List<string>();
 
@@ -141,7 +142,8 @@ namespace CalculatorLabb3
                 {
                     operatorString = "";
                 }
-                Console.Write(i + operatorString);
+                Console.Write(userInputs[i] + operatorString);
+                resultString += (userInputs[i] + operatorString);
             }
             Console.Write(" = " + Addition());
 
@@ -168,6 +170,7 @@ namespace CalculatorLabb3
             {
                 result += item;
             }
+            
             return result;
 
         }
