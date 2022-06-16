@@ -15,7 +15,8 @@ namespace CalculatorLabb3
         public static string operatorString;
 
         public static double resultSavedInMemory = 0;
-
+        public static string calculationInput;
+        public static double calculationBreakdown;
 
 
         public static double input1;
@@ -65,7 +66,7 @@ namespace CalculatorLabb3
                 if (resultSavedInMemory != 0)
                 {
                     Console.WriteLine("Would you like to use your stored result in this calculation?\n1. Yes\n2. No");
-                    
+
                     switch (Console.ReadLine())
                     {
                         case "1":
@@ -86,7 +87,7 @@ namespace CalculatorLabb3
 
                 if (double.TryParse(inputUSer, out input))
                 {
-                    
+
                     userInputs.Add(input);
                 }
                 else if (inputUSer == "")
@@ -97,11 +98,133 @@ namespace CalculatorLabb3
                 {
                     Console.WriteLine("You must enter numbers, not special characters!");
                 }
-               
-            }
 
+            }
+            Console.Clear();
             userInputBool = true;
 
+
+        }
+        public static void UserInputsWithStrings()
+        {
+            Console.Clear();
+            Console.Write("Please write your whole calculation: ");
+            calculationInput = Console.ReadLine();
+
+        }
+        public static void CalculationStringHandler()
+        {
+
+            string numberHolder = "";
+            List<double> numbersList = new List<double>();
+            List<char> operatorList = new List<char>();
+
+
+            for (int i = 0; i < calculationInput.Length; i++)
+            {
+                if (char.IsDigit(calculationInput, i))
+                {
+                    numberHolder += calculationInput[i];
+                }
+                if (calculationInput[i] == 43 || calculationInput[i] == 45 || calculationInput[i] == 47 || calculationInput[i] == 42)
+                {
+                    numbersList.Add(Convert.ToDouble(numberHolder));
+                    numberHolder = "";
+                    if (calculationInput[i] == 43)
+                    {
+                        operatorList.Add(Convert.ToChar(43));
+                    }
+                    if (calculationInput[i] == 45)
+                    {
+                        operatorList.Add(Convert.ToChar(45));
+                    }
+                    if (calculationInput[i] == 47)
+                    {
+                        operatorList.Add(Convert.ToChar(47));
+                    }
+                    if (calculationInput[i] == 42)
+                    {
+                        operatorList.Add(Convert.ToChar(42));
+                    }
+
+
+                }
+
+                char firstOperator = operatorList[0];
+                char secondOperator;
+                char thirdOperator;
+
+                if (operatorList[1] == )
+                {
+
+                }
+         
+                Console.ReadKey();
+                for (int n = 0; n < numbersList.Count; n++)
+                {
+                    numbersList[n] (operatorList[1]);
+                }
+
+
+
+
+
+
+
+
+               
+
+
+                //if (char.IsDigit(calculationInput, i) && char.IsDigit(calculationInput, i++))
+                //{
+                //    firstNumber += (calculationInput[i - 1]-48) + (calculationInput[i]-48);
+                //    Console.WriteLine(firstNumber);
+                //    Console.ReadLine();
+                //}
+
+
+
+                //if (char.IsDigit(calculationInput, i))
+                //{
+                //    firstNumber += calculationInput[i];
+                //    Console.WriteLine("Number = "+firstNumber);
+                //    if (!char.IsDigit(calculationInput, i))
+                //    {
+                //        firstNumber = "";
+                //    }
+                //}
+                //if (calculationInput[i] == 43)
+                //{
+
+                //    Console.WriteLine("+");
+                //}
+                //if (calculationInput[i] == 45)
+                //{
+                //    Console.WriteLine("-");
+                //}
+                //if (calculationInput[i] == 47)
+                //{
+                //    Console.WriteLine("/");
+                //}
+                //if (calculationInput[i] == 42)
+                //{
+                //    Console.WriteLine("*");
+                //}
+
+
+
+
+                //char firstChar = calculationInput[i];
+
+                //char.IsLetterOrDigit(firstChar);
+                //if ()
+                //{
+
+                //}
+            }
+
+            Console.WriteLine();
+            Console.ReadLine();
 
         }
         public static void CalculationForm()
@@ -154,7 +277,7 @@ namespace CalculatorLabb3
 
             for (int i = 0; i < userInputs.Count; i++)
             {
-                if (i < (userInputs.Count -1))
+                if (i < (userInputs.Count - 1))
                 {
                     operatorString = calcFormString;
                 }
@@ -162,14 +285,14 @@ namespace CalculatorLabb3
                 {
                     operatorString = "";
                 }
-                
+
                 resultString += $"{userInputs[i]} {operatorString} ";
             }
 
             resultString += $"= {result}";
             CalculationHistory.Add(resultString);
 
-            
+
 
 
         }
@@ -180,7 +303,7 @@ namespace CalculatorLabb3
 
             SaveResultInMemory(result);
 
-            
+
 
 
             resultString = "";
@@ -204,7 +327,7 @@ namespace CalculatorLabb3
                         resultSavedInMemory = result;
                         Console.WriteLine($"You pressed yes, saving result {resultSavedInMemory} in memory...\nPress Enter to go back to menu");
                         Console.ReadLine();
-                       
+
                         break;
                     }
                     else if (SaveResult == "2")
@@ -215,7 +338,7 @@ namespace CalculatorLabb3
                     }
                 }
             }
-           
+
             return result;
         }
 
